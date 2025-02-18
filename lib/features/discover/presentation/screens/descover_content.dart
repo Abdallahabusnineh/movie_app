@@ -79,7 +79,10 @@ class DiscoverContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const DetailsScreen(),
+                                builder: (context) => ShowMovieScreen(
+                                  isMovie: true,
+                                  model: bloc.filteredMoviesList[index],
+                                ),
                               ),
                             );
                           },
@@ -101,7 +104,10 @@ class DiscoverContent extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const DetailsScreen(),
+                                builder: (context) => ShowMovieScreen(
+                                  isMovie: false,
+                                  model: bloc.filteredTvList[index],
+                                ),
                               ),
                             );
                           },

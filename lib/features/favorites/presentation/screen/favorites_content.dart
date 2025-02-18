@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_movie_app/features/discover/presentation/screens/show_movie_screen.dart';
 import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_movie_app/features/favorites/presentation/widget/favorite_item.dart';
 
@@ -45,15 +46,15 @@ class FavoriteContant extends StatelessWidget {
                           posterPath: bloc.favoritesList[index].posterPath,
                           title: bloc.favoritesList[index].title,
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => ShowMovieScreen(
-                            //       isMovie: true,
-                            //       model: bloc.favoritesList[index],
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ShowMovieScreen(
+                                  isMovie: true,
+                                  model: bloc.favoritesList[index],
+                                ),
+                              ),
+                            );
                           },
                         );
                       },

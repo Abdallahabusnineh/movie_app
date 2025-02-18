@@ -12,7 +12,7 @@ PreferredSizeWidget myAppBar(
   bool removeLeading = false,
 }) {
   return AppBar(
-    backgroundColor: AppColors.background,
+    backgroundColor: AppColors.darkBlue,
     leadingWidth: 80,
     scrolledUnderElevation: 0.0,
 
@@ -23,16 +23,6 @@ PreferredSizeWidget myAppBar(
       visible: !removeLeading,
       child: Visibility(
         visible: isBack,
-        replacement: MyIcon(
-          icon: AppIcons.notificationOn, //AppIcons.notificationoff for off
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          onTap: () {
-            // Route route = MaterialPageRoute(
-            //   builder: (context) => NotificationsScreen(),
-            // );
-            // Navigator.push(context, route);
-          },
-        ),
         child: MyIcon(
           withDecoration: true,
           icon: AppIcons.arrowBack,
@@ -57,21 +47,6 @@ PreferredSizeWidget myAppBar(
     ///---------------///
     ///----Actions----///
     ///---------------///
-    actions: actions ??
-        [
-          ///-------------------///
-          ///----Search Icon----///
-          ///-------------------///
-          MyIcon(
-            icon: AppIcons.search,
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            onTap: () {
-              // Route route = MaterialPageRoute(
-              //   builder: (context) => SearchScreen(),
-              // );
-              // Navigator.push(context, route);
-            },
-          ),
-        ],
+    actions: actions ?? [],
   );
 }
