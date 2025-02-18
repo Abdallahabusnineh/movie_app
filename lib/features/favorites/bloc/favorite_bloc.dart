@@ -44,13 +44,14 @@ class FavoriteBloc extends Bloc<FavoriteEventAbstract, FavoritesStateAbstract> {
     );
   }
 
-  FutureOr<void> _onChangeFavoriteStatus(ChangeFavoriteStatusEvent event,
-      Emitter<FavoritesStateAbstract> emit) async {
+  FutureOr<void> _onChangeFavoriteStatus(
+    ChangeFavoriteStatusEvent event,
+    Emitter<FavoritesStateAbstract> emit,
+  ) async {
     emit(ChangeFavoriteStatusLoadingState());
-    final result = await repository.addOrRemoveFavorites(
-      event.movieId,
-      event.isFavorite,
-    );
+
+    final result =
+        await repository.addOrRemoveFavorites(event.movieId, event.isFavorite);
 
     result.fold(
       (failure) {
@@ -58,6 +59,17 @@ class FavoriteBloc extends Bloc<FavoriteEventAbstract, FavoritesStateAbstract> {
         emit(ChangeFavoriteStatusErrorState(message: failure.message));
       },
       (success) {
+        if (event.isFavorite) {
+          favoritesList
+              .add(MoviesModel(id: event.movieId)); // Add to local list
+        } else {
+          favoritesList.removeWhere(
+              (movie) => movie.id == event.movieId); // Remove from local list
+        }
+
+        isFavorite =
+            favoritesList.any((element) => element.id == event.movieId);
+
         emit(ChangeFavoriteStatusSuccessState());
       },
     );

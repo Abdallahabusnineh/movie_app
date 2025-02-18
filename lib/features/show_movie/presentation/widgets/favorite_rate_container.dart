@@ -34,25 +34,22 @@ class FavoriteRateContainer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ///----Favorite Button----///
-              // LikeButton(
-              //   padding: const EdgeInsets.all(10),
-              //   onTap: (isLiked) async {
-              //     await onTapFavorite!(isFavorite);
-              //     return !isFavorite;
-              //   },
-              // ),
+           
               BlocBuilder<FavoriteBloc, FavoritesStateAbstract>(
                 builder: (context, state) {
-                  var isFavorite = context.read<FavoriteBloc>().isFavorite;
+                  var bloc = context
+                      .watch<FavoriteBloc>(); // Use watch to trigger rebuild
                   return IconButton(
                     padding: const EdgeInsets.all(10),
-                    onPressed: () async {
-                      await onTapFavorite!(isFavorite);
+                    onPressed: () {
+                      bloc.add(
+                          ChangeFavoriteStatusEvent(movieId, !bloc.isFavorite));
                     },
                     icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: Colors.red,
+                      bloc.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: bloc.isFavorite
+                          ? Colors.red
+                          : Colors.grey, // Update UI correctly
                     ),
                   );
                 },
