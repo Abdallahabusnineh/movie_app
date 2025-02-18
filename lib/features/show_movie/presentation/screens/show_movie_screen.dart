@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/core/apis/api_base.dart';
@@ -11,7 +9,7 @@ import 'package:flutter_movie_app/core/widgets/my_image_zoom.dart';
 import 'package:flutter_movie_app/core/widgets/texts/my_text.dart';
 import 'package:flutter_movie_app/features/discover/models/movies_model.dart';
 import 'package:flutter_movie_app/features/discover/models/tv_model.dart';
-import 'package:flutter_movie_app/features/discover/presentation/widgets/favorite_rate_container.dart';
+import 'package:flutter_movie_app/features/show_movie/presentation/widgets/favorite_rate_container.dart';
 import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 

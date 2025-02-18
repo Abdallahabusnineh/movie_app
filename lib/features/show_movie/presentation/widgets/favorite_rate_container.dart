@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:like_button/like_button.dart';
 
 class FavoriteRateContainer extends StatelessWidget {
   final Function(bool)? onTapFavorite;

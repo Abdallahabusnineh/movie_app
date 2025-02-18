@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_movie_app/features/discover/presentation/screens/show_movie_screen.dart';
+import 'package:flutter_movie_app/features/show_movie/presentation/screens/show_movie_screen.dart';
 import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_movie_app/features/favorites/presentation/widget/favorite_item.dart';
 

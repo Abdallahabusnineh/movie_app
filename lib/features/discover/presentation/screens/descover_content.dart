@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/features/discover/bloc/discover_bloc.dart';
-import 'package:flutter_movie_app/features/discover/presentation/screens/show_movie_screen.dart';
+import 'package:flutter_movie_app/features/show_movie/presentation/screens/show_movie_screen.dart';
 import 'package:flutter_movie_app/features/discover/presentation/widgets/movie_tv_item.dart';
 import 'package:flutter_movie_app/features/discover/presentation/widgets/search_text_field.dart';
 

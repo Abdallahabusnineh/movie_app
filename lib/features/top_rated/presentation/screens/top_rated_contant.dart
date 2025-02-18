@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_movie_app/features/discover/presentation/screens/show_movie_screen.dart';
+import 'package:flutter_movie_app/features/show_movie/presentation/screens/show_movie_screen.dart';
 import 'package:flutter_movie_app/features/top_rated/bloc/top_rated_bloc.dart';
 import 'package:flutter_movie_app/features/top_rated/presentation/widgets/top_rated_item.dart';
 
