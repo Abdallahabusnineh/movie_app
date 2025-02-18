@@ -14,13 +14,13 @@ class FavoriteView extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColors.darkBlue,
-    
+
         ///--------------///
         ///----AppBar----///
         ///--------------///
-        appBar:
-            myAppBar(context, title: 'Favorites', isBack: false, actions: []),
-    
+        appBar: myAppBar(context,
+            title: 'Favorites Movies', isBack: false, actions: []),
+
         ///------------///
         ///----Body----///
         ///------------///

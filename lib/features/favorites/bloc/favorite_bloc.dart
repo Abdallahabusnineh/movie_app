@@ -60,11 +60,9 @@ class FavoriteBloc extends Bloc<FavoriteEventAbstract, FavoritesStateAbstract> {
       },
       (success) {
         if (event.isFavorite) {
-          favoritesList
-              .add(MoviesModel(id: event.movieId)); // Add to local list
+          favoritesList.add(MoviesModel(id: event.movieId));
         } else {
-          favoritesList.removeWhere(
-              (movie) => movie.id == event.movieId); // Remove from local list
+          favoritesList.removeWhere((movie) => movie.id == event.movieId);
         }
 
         isFavorite =
@@ -78,8 +76,6 @@ class FavoriteBloc extends Bloc<FavoriteEventAbstract, FavoritesStateAbstract> {
   FutureOr<void> _onCheckIfFavorite(
       CheckIfFavoriteEvent event, Emitter<FavoritesStateAbstract> emit) {
     isFavorite = favoritesList.any((element) => element.id == event.movieId);
-    print('isFavorite: $isFavorite');
-    print('movieId: ${event.movieId}');
     emit(CheckIfFavoriteState());
   }
 }

@@ -17,6 +17,7 @@ class FavoriteRateContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoriteBloc>().add(CheckIfFavoriteEvent(movieId));
     return Container(
       height: 90,
       decoration: BoxDecoration(
@@ -34,7 +35,6 @@ class FavoriteRateContainer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-           
               BlocBuilder<FavoriteBloc, FavoritesStateAbstract>(
                 builder: (context, state) {
                   var bloc = context
@@ -47,9 +47,7 @@ class FavoriteRateContainer extends StatelessWidget {
                     },
                     icon: Icon(
                       bloc.isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: bloc.isFavorite
-                          ? Colors.red
-                          : Colors.grey, // Update UI correctly
+                      color: bloc.isFavorite ? Colors.red : Colors.grey,
                     ),
                   );
                 },
