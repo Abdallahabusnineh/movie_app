@@ -31,6 +31,9 @@ class FavoriteRepository {
     return result;
   }
 
+  ///-------------------------------///
+  ///----Add Or Remove Favorites----///
+  ///-------------------------------///
   Future<Either<Failure, bool>> addOrRemoveFavorites(
       int movieId, bool isFavorite) async {
     String url = ApiPaths.addOrRemoveToFavorite;

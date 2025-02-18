@@ -16,10 +16,14 @@ class GetFavoritesErrorState extends FavoritesStateAbstract {
 }
 
 class GetFavoritesEmptyState extends FavoritesStateAbstract {}
+
 class ChangeFavoriteStatusLoadingState extends FavoritesStateAbstract {}
+
 class ChangeFavoriteStatusSuccessState extends FavoritesStateAbstract {}
+
 class ChangeFavoriteStatusErrorState extends FavoritesStateAbstract {
   final String message;
   ChangeFavoriteStatusErrorState({required this.message});
 }
+
 class CheckIfFavoriteState extends FavoritesStateAbstract {}

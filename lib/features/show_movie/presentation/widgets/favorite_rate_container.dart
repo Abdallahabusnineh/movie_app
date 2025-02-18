@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_movie_app/core/widgets/texts/my_text.dart';
 import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
+import 'package:flutter_movie_app/features/show_movie/bloc/show_movie_bloc.dart';
+import 'package:flutter_movie_app/features/show_movie/bloc/show_movie_state.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FavoriteRateContainer extends StatelessWidget {
@@ -18,6 +21,7 @@ class FavoriteRateContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<FavoriteBloc>().add(CheckIfFavoriteEvent(movieId));
+    context.read<ShowMovieBloc>().add(GetUserRatingEvent(movieId));
     return Container(
       height: 90,
       decoration: BoxDecoration(
@@ -37,8 +41,8 @@ class FavoriteRateContainer extends StatelessWidget {
             children: [
               BlocBuilder<FavoriteBloc, FavoritesStateAbstract>(
                 builder: (context, state) {
-                  var bloc = context
-                      .watch<FavoriteBloc>(); // Use watch to trigger rebuild
+                  //----Watch Rebuild
+                  var bloc = context.watch<FavoriteBloc>();
                   return IconButton(
                     padding: const EdgeInsets.all(10),
                     onPressed: () {
@@ -52,23 +56,60 @@ class FavoriteRateContainer extends StatelessWidget {
                   );
                 },
               ),
-
               const SizedBox(width: 10),
+              BlocBuilder<ShowMovieBloc, ShowMovieStateAbstract>(
+                builder: (context, state) {
+                  var bloc = context.watch<ShowMovieBloc>();
 
-              ///----Rate Button----///
-              RatingBar.builder(
-                initialRating: 3,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                unratedColor: Colors.amber.withAlpha(50),
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: onRatingUpdate,
+                  // Default rating (if user hasn't rated)
+                  double initialRating = 0.0;
+                  bool hasUserRated = false;
+
+                  if (state is GetUserRatingSuccessState &&
+                      state.rating != null) {
+                    initialRating = state.rating!;
+                    hasUserRated = true;
+                  }
+
+                  return Row(
+                    children: [
+                      ///----Rate Button----///
+                      RatingBar.builder(
+                        initialRating: initialRating,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        unratedColor: Colors.amber.withAlpha(50),
+                        itemSize: 20,
+                        itemCount: 10,
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) =>
+                            const Icon(Icons.star, color: Colors.amber),
+                        onRatingUpdate: (rating) {
+                          bloc.add(AddMovieRatingEvent(movieId, rating));
+                        },
+                      ),
+
+                      const SizedBox(width: 10),
+
+                      ///----Delete Rating Button----///
+                      ///----Only show delete button if user has rated
+                      if (hasUserRated)
+                        InkWell(
+                          onTap: () {
+                            bloc.add(DeleteMovieRatingEvent(movieId));
+                          },
+                          child: const Column(
+                            children: [
+                              Icon(Icons.delete, color: Colors.redAccent),
+                              MyText(text: 'Remove', color: Colors.redAccent),
+                            ],
+                          ),
+                        ),
+                    ],
+                  );
+                },
               ),
             ],
           ),

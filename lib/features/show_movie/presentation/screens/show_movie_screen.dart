@@ -39,6 +39,7 @@ class ShowMovieScreen extends StatelessWidget {
         ///--------------///
         appBar: myAppBar(onTapLeading: () {
           context.read<FavoriteBloc>().add(GetFavoriteEvent());
+
           Navigator.pop(context);
         }, context, actions: [
           ///----Adult Icon
@@ -59,15 +60,19 @@ class ShowMovieScreen extends StatelessWidget {
         ///---------------------------------------///
         ///----Bottom Navigation Favorite Rate----///
         ///---------------------------------------///
-        bottomNavigationBar: FavoriteRateContainer(
-          movieId: isMovie ? (model as MoviesModel).id : (model as TvModel).id,
-          onRatingUpdate: (newVal) {},
-          onTapFavorite: (newVal) {
-            context.read<FavoriteBloc>().add(ChangeFavoriteStatusEvent(
-                  isMovie ? (model as MoviesModel).id : (model as TvModel).id,
-                  newVal,
-                ));
-          },
+        bottomNavigationBar: Visibility(
+          visible: isMovie,
+          child: FavoriteRateContainer(
+            movieId:
+                isMovie ? (model as MoviesModel).id : (model as TvModel).id,
+            onRatingUpdate: (newVal) {},
+            onTapFavorite: (newVal) {
+              context.read<FavoriteBloc>().add(ChangeFavoriteStatusEvent(
+                    isMovie ? (model as MoviesModel).id : (model as TvModel).id,
+                    newVal,
+                  ));
+            },
+          ),
         ),
 
         ///------------///
