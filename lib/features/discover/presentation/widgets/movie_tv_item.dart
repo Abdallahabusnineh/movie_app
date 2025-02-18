@@ -23,10 +23,13 @@ class MovieTvItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: ListTile(
-        leading: MyImage(
-          width: Sizes.width / 8,
-          fit: BoxFit.contain,
-          image: Environment.baseImageUrl + posterPath,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: MyImage(
+            width: Sizes.width / 6,
+            fit: BoxFit.fill,
+            image: Environment.baseImageUrl + posterPath,
+          ),
         ),
         title: MyText(
           text: title,

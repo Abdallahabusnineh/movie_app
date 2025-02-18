@@ -16,14 +16,14 @@ class TopRatedBloc extends Bloc<TopRatedEventAbstract, TopRatedStateAbstract> {
 
   TopRatedBloc(this.context, {required this.repository})
       : super(TopRatedInitialState()) {
-    on<MoviesLoadingEvent>(_onLoadMovies);
+    on<TopRatedStartProcessEvent>(_onTopRatedStartProcessEvent);
   }
 
   ///-------------------///
   ///----Load Movies----///
   ///-------------------///
-  Future<void> _onLoadMovies(
-      MoviesLoadingEvent event, Emitter<TopRatedStateAbstract> emit) async {
+  Future<void> _onTopRatedStartProcessEvent(TopRatedStartProcessEvent event,
+      Emitter<TopRatedStateAbstract> emit) async {
     emit(TopRatedLoadingState());
     final result = await repository.getMovies();
 

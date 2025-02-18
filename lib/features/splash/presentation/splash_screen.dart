@@ -6,7 +6,7 @@ import 'package:flutter_movie_app/core/utils/images/app_images.dart';
 import 'package:flutter_movie_app/core/widgets/my_background.dart';
 import 'package:flutter_movie_app/core/widgets/my_image.dart';
 import 'package:flutter_movie_app/core/widgets/texts/my_text.dart';
-import 'package:flutter_movie_app/features/app_navigation/presentation/app_navigation.dart';
+import 'package:flutter_movie_app/core/app_navigation/app_navigation.dart';
 import 'package:flutter_movie_app/features/splash/bloc/splash_bloc.dart';
 
 class SplashScreen extends StatelessWidget {

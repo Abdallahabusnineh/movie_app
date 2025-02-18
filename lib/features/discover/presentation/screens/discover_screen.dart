@@ -13,9 +13,8 @@ class DiscoverView extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           DiscoverBloc(context, repository: DiscoverRepository())
-
             ///----Load movies on init
-            ..add(MoviesLoadingEvent()),
+            ..add(MoviesStartProcessEvent()),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

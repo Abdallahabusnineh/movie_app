@@ -9,6 +9,7 @@ import 'package:flutter_movie_app/core/widgets/my_image_zoom.dart';
 import 'package:flutter_movie_app/core/widgets/texts/my_text.dart';
 import 'package:flutter_movie_app/features/discover/models/movies_model.dart';
 import 'package:flutter_movie_app/features/discover/models/tv_model.dart';
+import 'package:flutter_movie_app/features/show_movie/bloc/show_movie_bloc.dart';
 import 'package:flutter_movie_app/features/show_movie/presentation/widgets/favorite_rate_container.dart';
 import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -65,13 +66,6 @@ class ShowMovieScreen extends StatelessWidget {
           child: FavoriteRateContainer(
             movieId:
                 isMovie ? (model as MoviesModel).id : (model as TvModel).id,
-            onRatingUpdate: (newVal) {},
-            onTapFavorite: (newVal) {
-              context.read<FavoriteBloc>().add(ChangeFavoriteStatusEvent(
-                    isMovie ? (model as MoviesModel).id : (model as TvModel).id,
-                    newVal,
-                  ));
-            },
           ),
         ),
 

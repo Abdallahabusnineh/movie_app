@@ -3,13 +3,13 @@ part of 'discover_bloc.dart';
 @immutable
 sealed class DiscoverEventAbstract {}
 
-class MoviesLoadingEvent extends DiscoverEventAbstract {}
+class MoviesStartProcessEvent extends DiscoverEventAbstract {}
 
-class TvShowsLoadingEvent extends DiscoverEventAbstract {}
+class TvShowsStartProcessEvent extends DiscoverEventAbstract {}
 
-class ToggleMoviesTvEvent extends DiscoverEventAbstract {
+class ToggleDiscoverTvEvent extends DiscoverEventAbstract {
   final bool isMovies;
-  ToggleMoviesTvEvent({required this.isMovies});
+  ToggleDiscoverTvEvent({required this.isMovies});
 }
 
 class SearchMoviesTvEvent extends DiscoverEventAbstract {

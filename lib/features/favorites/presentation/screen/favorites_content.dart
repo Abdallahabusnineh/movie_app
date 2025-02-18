@@ -46,6 +46,7 @@ class FavoriteContant extends StatelessWidget {
                           posterPath: bloc.favoritesList[index].posterPath,
                           title: bloc.favoritesList[index].title,
                           onTap: () {
+                            
                             Navigator.push(
                               context,
                               MaterialPageRoute(

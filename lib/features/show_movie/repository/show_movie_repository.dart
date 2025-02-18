@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_movie_app/core/apis/api_failure.dart';
 import 'package:flutter_movie_app/core/apis/api_helper.dart';
+import 'package:flutter_movie_app/core/apis/api_paths.dart';
 
 class ShowMovieRepository {
   ///---------------------------///
   ///----Delete Movie Rating----///
   ///---------------------------///
   Future<Either<Failure, bool>> deleteMovieRating(int movieId) async {
-    String url = "https://api.themoviedb.org/3/movie/$movieId/rating";
+    String url = ApiPaths.deleteMovieRating(movieId);
 
     Either<Failure, bool> result = left(Failure('Unknown error'));
 
@@ -31,7 +32,7 @@ class ShowMovieRepository {
   ///----Rate Movie----///
   ///------------------///
   Future<Either<Failure, bool>> rateMovie(int movieId, double rating) async {
-    String url = 'https://api.themoviedb.org/3/movie/$movieId/rating';
+    String url = ApiPaths.rateMovie(movieId);
 
     Either<Failure, bool> result = left(Failure('Unknown error'));
 
@@ -56,7 +57,7 @@ class ShowMovieRepository {
   ///----Get User Rating----///
   ///-----------------------///
   Future<Either<Failure, double?>> getUserRating(int movieId) async {
-    String url = 'https://api.themoviedb.org/3/movie/$movieId/account_states';
+    String url = ApiPaths.getUserRating(movieId);
 
     Either<Failure, double?> result = left(Failure('Unknown error'));
 
@@ -66,7 +67,8 @@ class ShowMovieRepository {
       onSuccess: (response) {
         double? rating;
 
-        final Map<String, dynamic> data = jsonDecode(response.data);
+        final Map<String, dynamic> data =
+            response.data; // No need for jsonDecode
 
         if (data.containsKey('rated') &&
             data['rated'] is Map<String, dynamic>) {

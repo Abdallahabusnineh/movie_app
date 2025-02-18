@@ -7,13 +7,11 @@ import 'package:flutter_movie_app/features/show_movie/bloc/show_movie_state.dart
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FavoriteRateContainer extends StatelessWidget {
-  final Function(bool)? onTapFavorite;
-  final void Function(double) onRatingUpdate;
+
   final int movieId;
 
   const FavoriteRateContainer({
-    required this.onTapFavorite,
-    required this.onRatingUpdate,
+   
     required this.movieId,
     super.key,
   });
@@ -61,14 +59,12 @@ class FavoriteRateContainer extends StatelessWidget {
                 builder: (context, state) {
                   var bloc = context.watch<ShowMovieBloc>();
 
-                  // Default rating (if user hasn't rated)
                   double initialRating = 0.0;
                   bool hasUserRated = false;
 
-                  if (state is GetUserRatingSuccessState &&
-                      state.rating != null) {
-                    initialRating = state.rating!;
-                    hasUserRated = true;
+                  if (state is GetUserRatingSuccessState) {
+                    initialRating = state.rating ?? 0.0;
+                    hasUserRated = state.hasUserRated;
                   }
 
                   return Row(
@@ -90,11 +86,9 @@ class FavoriteRateContainer extends StatelessWidget {
                           bloc.add(AddMovieRatingEvent(movieId, rating));
                         },
                       ),
-
                       const SizedBox(width: 10),
 
                       ///----Delete Rating Button----///
-                      ///----Only show delete button if user has rated
                       if (hasUserRated)
                         InkWell(
                           onTap: () {

@@ -12,15 +12,18 @@ class ShowMovieBloc
     extends Bloc<ShowMovieEventAbstract, ShowMovieStateAbstract> {
   final ShowMovieRepository repository;
 
-  ShowMovieBloc({required this.repository}) : super(MoviesInitialState()) {
+  ShowMovieBloc({required this.repository}) : super(ShowMovieInitialState()) {
     on<DeleteMovieRatingEvent>(_onDeleteMovieRating);
     on<AddMovieRatingEvent>(_onAddMovieRating);
     on<GetUserRatingEvent>(_onGetUserRating);
   }
 
   ///----Delete Movie Rating----///
-  Future<void> _onDeleteMovieRating(DeleteMovieRatingEvent event,
-      Emitter<ShowMovieStateAbstract> emit) async {
+
+  Future<void> _onDeleteMovieRating(
+    DeleteMovieRatingEvent event,
+    Emitter<ShowMovieStateAbstract> emit,
+  ) async {
     emit(DeleteMovieRatingLoadingState());
 
     final result = await repository.deleteMovieRating(event.movieId);
@@ -31,6 +34,7 @@ class ShowMovieBloc
       },
       (success) {
         emit(DeleteMovieRatingSuccessState());
+        emit(GetUserRatingSuccessState(null)); // Reset rating
       },
     );
   }
@@ -51,6 +55,7 @@ class ShowMovieBloc
       },
       (success) {
         emit(AddMovieRatingSuccessState());
+        emit(GetUserRatingSuccessState(event.rating));
       },
     );
   }

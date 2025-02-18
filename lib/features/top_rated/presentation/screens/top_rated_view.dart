@@ -16,7 +16,7 @@ class TopRatedView extends StatelessWidget {
           TopRatedBloc(context, repository: TopRatedRepository())
 
             ///----Load movies on init
-            ..add(MoviesLoadingEvent()),
+            ..add(TopRatedStartProcessEvent()),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

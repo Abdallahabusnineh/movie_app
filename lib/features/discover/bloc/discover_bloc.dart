@@ -24,17 +24,17 @@ class DiscoverBloc extends Bloc<DiscoverEventAbstract, DiscoverStateAbstract> {
 
   DiscoverBloc(this.context, {required this.repository})
       : super(MoviesInitialState()) {
-    on<MoviesLoadingEvent>(_onLoadMovies);
-    on<TvShowsLoadingEvent>(_onLoadTvShows);
-    on<ToggleMoviesTvEvent>(_onToggleMoviesTv);
+    on<MoviesStartProcessEvent>(_onLoadMovies);
+    on<TvShowsStartProcessEvent>(_onLoadTvShows);
+    on<ToggleDiscoverTvEvent>(_onToggleMoviesTv);
     on<SearchMoviesTvEvent>(_onSearchMoviesTv);
   }
 
   ///-------------------///
   ///----Load Movies----///
   ///-------------------///
-  Future<void> _onLoadMovies(
-      MoviesLoadingEvent event, Emitter<DiscoverStateAbstract> emit) async {
+  Future<void> _onLoadMovies(MoviesStartProcessEvent event,
+      Emitter<DiscoverStateAbstract> emit) async {
     emit(MoviesLoadingState());
     final result = await repository.getMovies();
 
@@ -59,8 +59,8 @@ class DiscoverBloc extends Bloc<DiscoverEventAbstract, DiscoverStateAbstract> {
   ///---------------------///
   ///----Load TV Shows----///
   ///---------------------///
-  Future<void> _onLoadTvShows(
-      TvShowsLoadingEvent event, Emitter<DiscoverStateAbstract> emit) async {
+  Future<void> _onLoadTvShows(TvShowsStartProcessEvent event,
+      Emitter<DiscoverStateAbstract> emit) async {
     emit(TvShowsLoadingState());
     final result = await repository.getTvShows();
 
@@ -86,14 +86,14 @@ class DiscoverBloc extends Bloc<DiscoverEventAbstract, DiscoverStateAbstract> {
   ///----Toggle Movies/TV----///
   ///------------------------///
   void _onToggleMoviesTv(
-      ToggleMoviesTvEvent event, Emitter<DiscoverStateAbstract> emit) {
+      ToggleDiscoverTvEvent event, Emitter<DiscoverStateAbstract> emit) {
     isMoviesSelected = event.isMovies;
     emit(ToggleMoviesTvState());
 
     if (isMoviesSelected) {
-      add(MoviesLoadingEvent());
+      add(MoviesStartProcessEvent());
     } else {
-      add(TvShowsLoadingEvent());
+      add(TvShowsStartProcessEvent());
     }
   }
 

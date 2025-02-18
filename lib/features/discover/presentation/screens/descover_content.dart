@@ -36,11 +36,11 @@ class DiscoverContent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _buildToggleButton('Movies', blocListener.isMoviesSelected,
-                      () => bloc.add(ToggleMoviesTvEvent(isMovies: true))),
+                      () => bloc.add(ToggleDiscoverTvEvent(isMovies: true))),
                   const VerticalDivider(
                       width: 20, thickness: 2, color: Colors.white),
                   _buildToggleButton('TV Shows', !blocListener.isMoviesSelected,
-                      () => bloc.add(ToggleMoviesTvEvent(isMovies: false))),
+                      () => bloc.add(ToggleDiscoverTvEvent(isMovies: false))),
                 ],
               ),
             ),
