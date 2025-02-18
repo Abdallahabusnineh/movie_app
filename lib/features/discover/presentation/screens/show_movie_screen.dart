@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/core/apis/api_base.dart';
 import 'package:flutter_movie_app/core/themes/app_colors.dart';
 import 'package:flutter_movie_app/core/utils/app_sizes.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_movie_app/core/widgets/texts/my_text.dart';
 import 'package:flutter_movie_app/features/discover/models/movies_model.dart';
 import 'package:flutter_movie_app/features/discover/models/tv_model.dart';
 import 'package:flutter_movie_app/features/discover/presentation/widgets/favorite_rate_container.dart';
+import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ShowMovieScreen extends StatelessWidget {
@@ -37,7 +39,10 @@ class ShowMovieScreen extends StatelessWidget {
         ///--------------///
         ///----AppBar----///
         ///--------------///
-        appBar: myAppBar(context, actions: [
+        appBar: myAppBar(onTapLeading: () {
+          context.read<FavoriteBloc>().add(GetFavoriteEvent());
+          Navigator.pop(context);
+        }, context, actions: [
           ///----Adult Icon
           MyText(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -57,9 +62,13 @@ class ShowMovieScreen extends StatelessWidget {
         ///----Bottom Navigation Favorite Rate----///
         ///---------------------------------------///
         bottomNavigationBar: FavoriteRateContainer(
+          movieId: isMovie ? (model as MoviesModel).id : (model as TvModel).id,
           onRatingUpdate: (newVal) {},
           onTapFavorite: (newVal) {
-            log('Favorite: $newVal');
+            context.read<FavoriteBloc>().add(ChangeFavoriteStatusEvent(
+                  isMovie ? (model as MoviesModel).id : (model as TvModel).id,
+                  newVal,
+                ));
           },
         ),
 

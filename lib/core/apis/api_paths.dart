@@ -4,4 +4,6 @@ class ApiPaths {
   static const tvApi =
       'discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc';
   static const topRatedMoviesApi = 'movie/top_rated?language=en-US&page=1';
+static const String getFavoritesMovies='account/21821685/favorite/movies?language=en-US&page=1&sort_by=created_at.asc';
+  static const String addOrRemoveToFavorite= 'account/21821685/favorite';
 }

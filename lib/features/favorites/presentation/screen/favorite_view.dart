@@ -11,30 +11,23 @@ class FavoriteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          FavoriteBloc(context, repository: FavoriteRepository())
-
-            ///----Load movies on init
-            ..add(FavoriteLoadingEvent()),
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          backgroundColor: AppColors.darkBlue,
-
-          ///--------------///
-          ///----AppBar----///
-          ///--------------///
-          appBar:
-              myAppBar(context, title: 'Favorites', isBack: false, actions: []),
-
-          ///------------///
-          ///----Body----///
-          ///------------///
-          body: const FavoriteContant(),
-        ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.darkBlue,
+    
+        ///--------------///
+        ///----AppBar----///
+        ///--------------///
+        appBar:
+            myAppBar(context, title: 'Favorites', isBack: false, actions: []),
+    
+        ///------------///
+        ///----Body----///
+        ///------------///
+        body: const FavoriteContant(),
       ),
     );
   }

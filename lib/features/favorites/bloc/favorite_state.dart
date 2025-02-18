@@ -6,13 +6,20 @@ sealed class FavoritesStateAbstract {}
 ///----Favorites States
 class FavoritesInitialState extends FavoritesStateAbstract {}
 
-class FavoritesLoadingState extends FavoritesStateAbstract {}
+class GetFavoritesLoadingState extends FavoritesStateAbstract {}
 
-class FavoritesSuccessState extends FavoritesStateAbstract {}
+class GetFavoritesSuccessState extends FavoritesStateAbstract {}
 
-class FavoritesErrorState extends FavoritesStateAbstract {
+class GetFavoritesErrorState extends FavoritesStateAbstract {
   final String message;
-  FavoritesErrorState({required this.message});
+  GetFavoritesErrorState({required this.message});
 }
 
-class FavoritesEmptyState extends FavoritesStateAbstract {}
+class GetFavoritesEmptyState extends FavoritesStateAbstract {}
+class ChangeFavoriteStatusLoadingState extends FavoritesStateAbstract {}
+class ChangeFavoriteStatusSuccessState extends FavoritesStateAbstract {}
+class ChangeFavoriteStatusErrorState extends FavoritesStateAbstract {
+  final String message;
+  ChangeFavoriteStatusErrorState({required this.message});
+}
+class CheckIfFavoriteState extends FavoritesStateAbstract {}

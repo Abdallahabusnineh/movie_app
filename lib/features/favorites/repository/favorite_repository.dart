@@ -9,9 +9,9 @@ class FavoriteRepository {
   ///----Get Movies----///
   ///------------------///
   Future<Either<Failure, List<MoviesModel>>> getFavorites() async {
-    String url = ApiPaths.topRatedMoviesApi;
+    String url = ApiPaths.getFavoritesMovies;
 
-    List<MoviesModel> movies = [];
+    List<MoviesModel> favoritesMovies = [];
     Either<Failure, List<MoviesModel>> result = left(Failure('Unknown error'));
 
     await ApiHelper.request(
@@ -19,9 +19,34 @@ class FavoriteRepository {
       url: url,
       onSuccess: (response) {
         response.data['results'].forEach((element) {
-          movies.add(MoviesModel.fromJson(element));
+          favoritesMovies.add(MoviesModel.fromJson(element));
         });
-        result = right(movies);
+        result = right(favoritesMovies);
+      },
+      onFailure: (e) {
+        result = left(Failure(e.toString()));
+      },
+    );
+
+    return result;
+  }
+
+  Future<Either<Failure, bool>> addOrRemoveFavorites(
+      int movieId, bool isFavorite) async {
+    String url = ApiPaths.addOrRemoveToFavorite;
+
+    Either<Failure, bool> result = left(Failure('Unknown error'));
+
+    await ApiHelper.request(
+      method: HttpMethod.post,
+      url: url,
+      body: {
+        "media_type": "movie",
+        "media_id": movieId,
+        "favorite": isFavorite
+      },
+      onSuccess: (response) {
+        result = right(true);
       },
       onFailure: (e) {
         result = left(Failure(e.toString()));

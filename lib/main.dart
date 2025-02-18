@@ -3,6 +3,8 @@ import 'package:flutter_movie_app/core/config/package_info.dart';
 import 'package:flutter_movie_app/core/config/shared_db.dart';
 import 'package:flutter_movie_app/core/utils/app_sizes.dart';
 import 'package:flutter_movie_app/core/utils/bloc_observer.dart';
+import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
+import 'package:flutter_movie_app/features/favorites/repository/favorite_repository.dart';
 import 'package:flutter_movie_app/features/splash/presentation/splash_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +40,16 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Sizes.init(context);
-    return const MaterialApp(
-      scrollBehavior: ScrollBehavior(),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+    return MultiBlocProvider(
+      
+      providers: [
+        BlocProvider(create: (context) => FavoriteBloc(repository: FavoriteRepository())..add(GetFavoriteEvent())),
+      ],
+      child: const MaterialApp(
+        scrollBehavior: ScrollBehavior(),
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(),
+      ),
     );
   }
 }

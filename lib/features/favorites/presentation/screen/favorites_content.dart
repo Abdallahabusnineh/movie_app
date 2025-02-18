@@ -22,12 +22,12 @@ class FavoriteContant extends StatelessWidget {
               child: BlocBuilder<FavoriteBloc, FavoritesStateAbstract>(
                 builder: (context, state) {
                   ///----Loading
-                  if (state is FavoritesLoadingState) {
+                  if (state is GetFavoritesLoadingState) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
                   ///----Error
-                  if (state is FavoritesErrorState) {
+                  if (state is GetFavoritesErrorState) {
                     return Center(
                       child: Text(
                         'Error: ${state.toString()}',
@@ -37,7 +37,7 @@ class FavoriteContant extends StatelessWidget {
                   }
 
                   ///----Movies Success
-                  if (state is FavoritesSuccessState) {
+                  if (state is GetFavoritesSuccessState) {
                     return ListView.builder(
                       itemCount: bloc.favoritesList.length,
                       itemBuilder: (context, index) {

@@ -10,6 +10,7 @@ PreferredSizeWidget myAppBar(
   bool isBack = true,
   List<Widget>? actions,
   bool removeLeading = false,
+  void Function()? onTapLeading,
 }) {
   return AppBar(
     backgroundColor: AppColors.darkBlue,
@@ -27,9 +28,7 @@ PreferredSizeWidget myAppBar(
           withDecoration: true,
           icon: AppIcons.arrowBack,
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onTap: onTapLeading?? () => Navigator.pop(context),
         ),
       ),
     ),

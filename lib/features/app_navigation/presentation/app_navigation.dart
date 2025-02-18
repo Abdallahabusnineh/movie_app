@@ -1,7 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_app/core/themes/app_colors.dart';
 import 'package:flutter_movie_app/features/discover/presentation/screens/discover_screen.dart';
+import 'package:flutter_movie_app/features/favorites/bloc/favorite_bloc.dart';
 import 'package:flutter_movie_app/features/favorites/presentation/screen/favorite_view.dart';
 import 'package:flutter_movie_app/features/top_rated/presentation/screens/top_rated_view.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -20,7 +22,6 @@ class _AppNavigationState extends State<AppNavigation> {
     const FavoriteView(),
     const DiscoverView(),
     const TopRatedView(),
- 
   ];
 
   @override
@@ -66,6 +67,9 @@ class _AppNavigationState extends State<AppNavigation> {
               selectedIndex: _selectedIndex,
               iconSize: 24,
               onTabChange: (index) {
+                if (index == 0) {
+                  context.read<FavoriteBloc>().add(GetFavoriteEvent());
+                }
                 setState(() {
                   _selectedIndex = index;
                 });

@@ -10,36 +10,64 @@ part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEventAbstract, FavoritesStateAbstract> {
   final FavoriteRepository repository;
-  final BuildContext context;
 
   List<MoviesModel> favoritesList = [];
+  bool isFavorite = false;
 
-  FavoriteBloc(this.context, {required this.repository})
-      : super(FavoritesInitialState()) {
-    on<FavoriteLoadingEvent>(_onLoadFavorites);
+  FavoriteBloc({required this.repository}) : super(FavoritesInitialState()) {
+    on<GetFavoriteEvent>(_onLoadFavorites);
+    on<ChangeFavoriteStatusEvent>(_onChangeFavoriteStatus);
+    on<CheckIfFavoriteEvent>(_onCheckIfFavorite);
   }
 
   ///----------------------///
   ///----Load Favorites----///
   ///----------------------///
   Future<void> _onLoadFavorites(
-      FavoriteLoadingEvent event, Emitter<FavoritesStateAbstract> emit) async {
-    emit(FavoritesLoadingState());
+      GetFavoriteEvent event, Emitter<FavoritesStateAbstract> emit) async {
+    emit(GetFavoritesLoadingState());
     final result = await repository.getFavorites();
 
     result.fold(
       (failure) {
         log('Favorites Failure: ${failure.message}');
-        emit(FavoritesErrorState(message: failure.message));
+        emit(GetFavoritesErrorState(message: failure.message));
       },
       (success) {
         if (success.isEmpty) {
-          emit(FavoritesEmptyState());
+          emit(GetFavoritesEmptyState());
         } else {
           favoritesList = success;
-          emit(FavoritesSuccessState());
+          emit(GetFavoritesSuccessState());
         }
       },
     );
+  }
+
+  FutureOr<void> _onChangeFavoriteStatus(ChangeFavoriteStatusEvent event,
+      Emitter<FavoritesStateAbstract> emit) async {
+    emit(ChangeFavoriteStatusLoadingState());
+    final result = await repository.addOrRemoveFavorites(
+      event.movieId,
+      event.isFavorite,
+    );
+
+    result.fold(
+      (failure) {
+        log('Favorites Failure: ${failure.message}');
+        emit(ChangeFavoriteStatusErrorState(message: failure.message));
+      },
+      (success) {
+        emit(ChangeFavoriteStatusSuccessState());
+      },
+    );
+  }
+
+  FutureOr<void> _onCheckIfFavorite(
+      CheckIfFavoriteEvent event, Emitter<FavoritesStateAbstract> emit) {
+    isFavorite = favoritesList.any((element) => element.id == event.movieId);
+    print('isFavorite: $isFavorite');
+    print('movieId: ${event.movieId}');
+    emit(CheckIfFavoriteState());
   }
 }
